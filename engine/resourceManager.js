@@ -82,6 +82,7 @@ ResourceManager = {
     checkLoad : function() {
         var me = this;
 
+        me.fireEvent();
  //       me.callback();
     }
 }
