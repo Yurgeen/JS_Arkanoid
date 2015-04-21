@@ -1,0 +1,8 @@
+{
+  "Bird" : {
+    "death" : "resources/sound/bird.wav"
+  },
+  "Jet" : {
+    "shoot" : "resources/sound/pew.wav"
+  }
+}

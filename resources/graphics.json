@@ -1,0 +1,24 @@
+{
+  "Jet" : {
+      "image" : "resources/images/jet.png"
+  },
+  "Bird" : {
+    "image" : "resources/images/enemy.png",
+    "sprite" : {
+      "frameWidth" : 108,
+      "frameHeight" : 100,
+      "count" : 14
+    }
+  },
+  "Rocket" : {
+    "image" : "resources/images/bullet.png"
+  },
+  "Explosion" : {
+    "image" : "resources/images/boom.png",
+    "sprite" : {
+      "frameWidth" : 128,
+      "frameHeight" : 128,
+      "count" : 39
+    }
+  }
+}
