@@ -14,7 +14,7 @@ function start()
 	{
 		sky = new Sky(skyPattern, battlefield.width, battlefield.height);
 	};
-	skyPattern.src = "sky.png";
+	skyPattern.src = "sky.jpg";
 	
 	//Jet
 	jetModel = new Image();

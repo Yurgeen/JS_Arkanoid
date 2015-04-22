@@ -14,6 +14,10 @@ ResourceManager = {
         me.graphics = {};
         me.audio = {};
 
+        me.callback = callback;
+
+        me.loadedImgConfigsCnt = 0;
+        me.imagesToLoad = 0;
         me.GRAPHICS_CONFIG.forEach(me.loadGraphics);
         //me.AUDIO_CONFIG.forEach(me.loadAudio(configFile));
     },
@@ -26,16 +30,21 @@ ResourceManager = {
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 config = JSON.parse(req.responseText);
+
+                me.loadedImgConfigsCnt++;
+                me.imagesToLoad += Utils.countProperties(config);
+
                 for (var img in config) {
                     var image = new Image();
-                    image.onload = (function(img, sprite) {
+                    image.onload = (function(img, imager, sprite) {
                         return function () {
                             if (sprite) {
                                 me.graphics[img] = me.makeSpiteArray(image, sprite.frameWidth, sprite.frameHeight, sprite.count);
                             } else {
                                 me.graphics[img] = [image];
-                        }
-                    }})(img, config[img].sprite);
+                            }
+                            me.checkLoad();
+                    }})(img, image, config[img].sprite);
                     image.src = config[img].image;
                 }
             }
@@ -81,8 +90,9 @@ ResourceManager = {
 
     checkLoad : function() {
         var me = this;
-
-        me.fireEvent();
- //       me.callback();
+        if (me.GRAPHICS_CONFIG.length == me.loadedImgConfigsCnt && Utils.countProperties(me.graphics) == me.imagesToLoad){
+            console.log("All graphics is loaded.");
+           // me.callback();
+        }
     }
 }
