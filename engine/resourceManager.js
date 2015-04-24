@@ -9,7 +9,7 @@ ResourceManager = {
     ],
 
     init : function(callback) {
-        var me = this;
+        var me = ResourceManager;
 
         me.graphics = {};
         me.audio = {};
@@ -92,7 +92,7 @@ ResourceManager = {
         var me = this;
         if (me.GRAPHICS_CONFIG.length == me.loadedImgConfigsCnt && Utils.countProperties(me.graphics) == me.imagesToLoad){
             console.log("All graphics is loaded.");
-           // me.callback();
+            me.callback();
         }
     }
 }

@@ -2,7 +2,7 @@ ModuleLoader = {
 
     CORE_LOADS : {
       "ResourceManager" : false,
-      "AmimationDrawer" : false
+      "AnimationManager" : false
     },
 
     MODULES : {
@@ -10,9 +10,15 @@ ModuleLoader = {
     },
 
     init : function(onLoadCallback) {
-        ResourceManager.onLoadCallback = onLoadCallback;
-        ResourceManager.init.call(ResourceManager, ModuleLoader.checkCoreLoaded("ResourceManager"));
-        AnimationDrawer.init.call(AnimationDrawer, ModuleLoader.checkCoreLoaded("AnimationDrawer"))
+        ModuleLoader.onLoadCallback = onLoadCallback;
+
+        ResourceManager.init(function() {
+            ModuleLoader.checkCoreLoaded("ResourceManager");
+        });
+
+        AnimationManager.init.call(AnimationManager, function() {
+            ModuleLoader.checkCoreLoaded("AnimationManager");
+        });
     },
 
     checkCoreLoaded : function (name) {
@@ -30,6 +36,7 @@ ModuleLoader = {
     },
 
     checkModulesLoaded : function () {
+        console.log("All modules are loaded.");
         ModuleLoader.onLoadCallback();
     }
 }

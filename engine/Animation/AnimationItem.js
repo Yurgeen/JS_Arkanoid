@@ -36,4 +36,13 @@ function AnimationItem(config) {
     me.setDepths(config.depth);
 
     me.animationFunction = config.animationFunction;
+    me.checkAlive = config.checkAlive;
+};
+
+AnimationItem.prototype.animationFunction = function () {
+
+};
+
+AnimationItem.prototype.checkAlive = function(){
+    return true;
 };
