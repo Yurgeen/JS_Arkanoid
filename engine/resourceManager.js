@@ -36,13 +36,13 @@ ResourceManager = {
 
                 for (var img in config) {
                     var image = new Image();
-                    image.onload = (function(img, imager, sprite) {
+                    image.onload = (function(img, image, sprite) {
                         return function () {
+                            me.graphics[img] = {};
                             if (sprite) {
-                                me.graphics[img] = me.makeSpiteArray(image, sprite.frameWidth, sprite.frameHeight, sprite.count);
-                            } else {
-                                me.graphics[img] = [image];
-                            }
+                                me.graphics[img].spriteConfig = me.makeSpiteArray(image, sprite.frameWidth, sprite.frameHeight, sprite.count);
+                            };
+                            me.graphics[img].image = image;
                             me.checkLoad();
                     }})(img, image, config[img].sprite);
                     image.src = config[img].image;
@@ -61,26 +61,19 @@ ResourceManager = {
 
     makeSpiteArray : function (image, frameWidth, frameHeight, cnt)
     {
-        var canvas = document.createElement('canvas'),
-            ctx = canvas.getContext("2d"),
-            r = Math.floor(image.width/frameWidth),
+        var r = Math.floor(image.width/frameWidth),
             c = Math.floor(image.height/frameHeight),
             n = 0, result = [];
 
-        canvas.width = 	image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
+        result.width = frameWidth;
+        result.height = frameHeight;
 
         for (var i = 0; i < r; i++) {
             for (var j = 0; j < c; j++) {
-                var partCanvas = document.createElement('canvas'),
-                    partCtx = partCanvas.getContext("2d"),
-                    ImgData = ctx.getImageData(j*frameWidth, i*frameHeight, frameWidth, frameHeight);
-
-                partCanvas.width = 	frameWidth;
-                partCanvas.height = frameHeight;
-                partCtx.putImageData(ImgData, 0, 0);
-                result.push(partCanvas);
+                result.push({
+                    "x" : i*result.width,
+                    "y" : j*result.height
+                });
                 n++;
                 if (n > cnt) break;
             }

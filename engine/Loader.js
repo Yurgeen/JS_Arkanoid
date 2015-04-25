@@ -16,7 +16,7 @@ ModuleLoader = {
             ModuleLoader.checkCoreLoaded("ResourceManager");
         });
 
-        AnimationManager.init.call(AnimationManager, function() {
+        AnimationManager.init(function() {
             ModuleLoader.checkCoreLoaded("AnimationManager");
         });
     },
