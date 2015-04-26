@@ -67,12 +67,13 @@ ResourceManager = {
 
         result.width = frameWidth;
         result.height = frameHeight;
+        result.frameN = cnt;
 
-        for (var i = 0; i < r; i++) {
-            for (var j = 0; j < c; j++) {
+        for (var i = 0; i < c; i++) {
+            for (var j = 0; j < r; j++) {
                 result.push({
-                    "x" : i*result.width,
-                    "y" : j*result.height
+                    "x" : j*result.width,
+                    "y" : i*result.height
                 });
                 n++;
                 if (n > cnt) break;

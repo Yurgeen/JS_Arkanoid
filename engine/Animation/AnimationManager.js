@@ -13,6 +13,8 @@ AnimationManager = {
         buffer.height = me.height;
         me.buffer = buffer.getContext("2d");
         callback();
+
+        me.localTime = 0;
     },
 
     getNewItemID : function(){
@@ -45,12 +47,15 @@ AnimationManager = {
                 }
             });
         });
+
+        me.localTime += dt;
     },
 
     getScene : function() {
         var me = AnimationManager;
 
-        me.buffer.clearRect(0,0, me.width, me.height);
+        me.buffer.fillStyle = "#ffffff";
+        me.buffer.fillRect(0, 0, me.width, me.height);
 
         for (var i = 0; i < me.layers.length; i++){
             if(me.layers[i]) {
@@ -59,8 +64,15 @@ AnimationManager = {
                 });
             }
         }
+        var img = ResourceManager.graphics.explosion,
+            fps = 30,
+            n = Math.round(me.localTime*fps/1000) % img.spriteConfig.frameN;
 
-        return me.buffer;
+        me.buffer.drawImage(img.image, img.spriteConfig[n].x, img.spriteConfig[n].y,
+            img.spriteConfig.width, img.spriteConfig.height,
+            0, 0, img.spriteConfig.width, img.spriteConfig.height);
+
+        return me.buffer.canvas;
     },
 
     draw : function()
@@ -71,7 +83,7 @@ AnimationManager = {
 
         AnimationManager.performAnimation(dt);
         me.ctx.drawImage(me.getScene(), 0, 0);
-        me.previousRenderTime = tnow();
+        me.previousRenderTime = tnow;
         requestAnimationFrame(me.draw);
     }
 
