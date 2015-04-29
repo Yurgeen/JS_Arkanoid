@@ -1,48 +1,60 @@
 function AnimationItem(config) {
     var me = this,
-        x, y,
         depths,
-        image,
-        animationFunction,
         id = AnimationManager.getNewItemID;
 
-    me.setCoordinates = function(pos) {
-        x = pos.x || 0;
-        y = pos.y || 0;
-    };
+    me.alive = true;
+    me.visible = false;
+    me.active = false;
+    me.localTime = 0;
 
-    me.getCoordinates = function() {
-        return {"x" : x, "y" : y};
-    };
+    me.image = config.image;
+    me.x = config.x || 0;
+    me.y = config.y || 0;
+    me.width = config.width || me.image.width;
+    me.height = config.height || me.image.height;
+    me.spriteConfig = config.spriteConfig;
 
     me.setDepths = function(value) {
         depths = value || 0;
     };
-
     me.getDepths = function(){
         return depths;
     };
 
-    me.setImage = function(value) {
-        image = value;
-    };
-
-    me.getImage = function() {
-        return image;
-    };
-
-    me.setCoordinates( {"x" : config.x, "y" : config.y} );
-    me.setImage(config.image);
     me.setDepths(config.depth);
-
-    me.animationFunction = config.animationFunction;
-    me.checkAlive = config.checkAlive;
 };
 
-AnimationItem.prototype.animationFunction = function () {
-
+AnimationItem.prototype.animationFunction = function (dt) {
+    var me = this;
+   // me.localTime += dt;
 };
 
 AnimationItem.prototype.checkAlive = function(){
-    return true;
+    var me = this;
+    return me.isAlive;
+};
+
+AnimationItem.prototype.onCollision = function() {
+    var me = this;
+    me.isAlive = false;
+};
+
+AnimationItem.prototype.play = function() {
+    var me = this;
+    me.visible = true;
+    me.active = true;
+};
+
+AnimationItem.prototype.pause = function() {
+    var me = this;
+    me.active = false;
+    me.visible = true;
+}
+
+AnimationItem.prototype.stop = function(){
+    var me = this;
+    me.active = false;
+    me.visible = false;
+    me.localTime = 0;
 };

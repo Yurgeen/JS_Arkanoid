@@ -1,3 +1,5 @@
+Modules = {};
+
 ModuleLoader = {
 
     CORE_LOADS : {
@@ -32,6 +34,7 @@ ModuleLoader = {
     },
 
     loadModules : function () {
+        Modules.background = new Background();
         ModuleLoader.checkModulesLoaded();
     },
 

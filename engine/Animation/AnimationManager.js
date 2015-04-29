@@ -41,13 +41,12 @@ AnimationManager = {
         var me = AnimationManager;
         me.layers.forEach(function(element){
             element.forEach(function(item){
-                item.animationFunction(dt);
-                if (!item.checkAlive()){
-
+                if (!item.active){
+                    item.localTime += dt;
+                    item.animationFunction.call(item,dt);
                 }
             });
         });
-
         me.localTime += dt;
     },
 
@@ -60,7 +59,12 @@ AnimationManager = {
         for (var i = 0; i < me.layers.length; i++){
             if(me.layers[i]) {
                 me.layers[i].forEach(function(element){
+                    var sx = 0,sy = 0,
+                        swidth = element.image.width,
+                        sheight = element.image.height;
 
+                    me.buffer.drawImage(element.image, sx, sy, swidth, sheight,
+                        element.x, element.y, element.width, element.height);
                 });
             }
         }

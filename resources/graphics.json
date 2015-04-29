@@ -18,7 +18,10 @@
     "sprite" : {
       "frameWidth" : 128,
       "frameHeight" : 128,
-      "count" : 39
+      "count" : 40
     }
+  },
+  "sky" : {
+    "image" : "resources/images/sky.jpg"
   }
 }
