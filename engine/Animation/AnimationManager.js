@@ -41,9 +41,8 @@ AnimationManager = {
         var me = AnimationManager;
         me.layers.forEach(function(element){
             element.forEach(function(item){
-                if (!item.active){
-                    item.localTime += dt;
-                    item.animationFunction.call(item,dt);
+                if (item.active){
+                    item.doStep.call(item,dt);
                 }
             });
         });
@@ -59,23 +58,25 @@ AnimationManager = {
         for (var i = 0; i < me.layers.length; i++){
             if(me.layers[i]) {
                 me.layers[i].forEach(function(element){
-                    var sx = 0,sy = 0,
+                    if (!element.visible) return;
+                    var sx = 0,sy = 0, n,
                         swidth = element.image.width,
                         sheight = element.image.height;
+
+                    if (element.spriteConfig) {
+                        n = Math.round(element.localTime*element.fps/1000)
+                            % element.spriteConfig.frameN;
+                        sx = element.spriteConfig[n].x;
+                        sy = element.spriteConfig[n].y;
+                        swidth = element.spriteConfig.width;
+                        sheight = element.spriteConfig.height;
+                    }
 
                     me.buffer.drawImage(element.image, sx, sy, swidth, sheight,
                         element.x, element.y, element.width, element.height);
                 });
             }
         }
-        var img = ResourceManager.graphics.explosion,
-            fps = 30,
-            n = Math.round(me.localTime*fps/1000) % img.spriteConfig.frameN;
-
-        me.buffer.drawImage(img.image, img.spriteConfig[n].x, img.spriteConfig[n].y,
-            img.spriteConfig.width, img.spriteConfig.height,
-            0, 0, img.spriteConfig.width, img.spriteConfig.height);
-
         return me.buffer.canvas;
     },
 
@@ -83,8 +84,8 @@ AnimationManager = {
     {
         var me = AnimationManager,
             tnow = Date.now(),
-            dt = tnow - me.previousRenderTime || 0;
-
+            dt;
+        dt = (tnow - me.previousRenderTime) || 0;
         AnimationManager.performAnimation(dt);
         me.ctx.drawImage(me.getScene(), 0, 0);
         me.previousRenderTime = tnow;

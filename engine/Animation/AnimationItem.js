@@ -14,7 +14,7 @@ function AnimationItem(config) {
     me.width = config.width || me.image.width;
     me.height = config.height || me.image.height;
     me.spriteConfig = config.spriteConfig;
-
+    me.fps = config.fps;
     me.setDepths = function(value) {
         depths = value || 0;
     };
@@ -23,11 +23,16 @@ function AnimationItem(config) {
     };
 
     me.setDepths(config.depth);
+}
+
+AnimationItem.prototype.doStep = function(dt) {
+    var me = this;
+    me.localTime += dt;
+    me.animationFunction();
 };
 
-AnimationItem.prototype.animationFunction = function (dt) {
-    var me = this;
-   // me.localTime += dt;
+AnimationItem.prototype.animationFunction = function () {
+
 };
 
 AnimationItem.prototype.checkAlive = function(){

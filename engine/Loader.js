@@ -8,7 +8,6 @@ ModuleLoader = {
     },
 
     MODULES : {
-
     },
 
     init : function(onLoadCallback) {
@@ -34,7 +33,10 @@ ModuleLoader = {
     },
 
     loadModules : function () {
-        Modules.background = new Background();
+        var me = ModuleLoader;
+        for (var key in me.MODULES) {
+            Modules[key] = new me.MODULES[key];
+        }
         ModuleLoader.checkModulesLoaded();
     },
 

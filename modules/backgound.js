@@ -21,8 +21,7 @@ function Background() {
                 depth: 0,
                 image: pattern.image
             });
-            item.animationFunction = function(dt) {
-                debugger;
+            item.animationFunction = function() {
                 n = (frameHeight % this.localTime*fps/1000) || 0;
                 this.y += n;
 
@@ -30,9 +29,19 @@ function Background() {
                     this.y = lastOffset - sceneHeight + n;
                 }
             };
+            tiles.push(item);
             AnimationManager.addItem(item);
         }
     }
 
     me.tiles = tiles;
 }
+
+Background.prototype.start = function(){
+    var me = this;
+    me.tiles.forEach(function(element){
+       element.play();
+    });
+}
+
+ModuleLoader.MODULES["Background"] = Background;

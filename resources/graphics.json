@@ -23,5 +23,8 @@
   },
   "sky" : {
     "image" : "resources/images/sky.jpg"
+  },
+  "logo" : {
+    "image" : "resources/images/logo.png"
   }
 }
