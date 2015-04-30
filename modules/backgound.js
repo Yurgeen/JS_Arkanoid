@@ -27,7 +27,7 @@ function Background() {
                 this.y += n;
 
                 if (this.y > sceneHeight) {
-                    this.y = lastOffset - sceneHeight;
+                    this.y = lastOffset - sceneHeight + n;
                 }
             };
             AnimationManager.addItem(item);
