@@ -12,14 +12,17 @@ ModuleLoader = {
 
     init : function(onLoadCallback) {
         ModuleLoader.onLoadCallback = onLoadCallback;
-
         ResourceManager.init(function() {
             ModuleLoader.checkCoreLoaded("ResourceManager");
         });
-
         AnimationManager.init(function() {
             ModuleLoader.checkCoreLoaded("AnimationManager");
         });
+    },
+
+    registerModule : function(moduleName, moduleConstructor) {
+        var me = ModuleLoader;
+        me.MODULES[moduleName] = moduleConstructor;
     },
 
     checkCoreLoaded : function (name) {

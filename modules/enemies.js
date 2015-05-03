@@ -22,4 +22,4 @@ Enemies.prototype.start = function()
 
 }
 
-ModuleLoader.MODULES["Enemies"] = Enemies;
+ModuleLoader.registerModule("Enemies", Enemies);

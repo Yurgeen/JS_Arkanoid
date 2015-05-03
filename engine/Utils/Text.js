@@ -1,6 +1,6 @@
 Text = {
 
-    drawText: function (text, fontSize, fontFamily, offset, maxWidth, operations) {
+    getTextImage: function (text, fontSize, fontFamily, offset, maxWidth, operations) {
         var fontConfig, canvas, ctx, x, y;
 
         fontSize = fontSize || 50;
@@ -22,61 +22,12 @@ Text = {
         x = offset;
         y = fontConfig.dimensions.height / 2;
 
-        Text.performOperations(text, fontConfig.font, x, y, operations, ctx);
+        Text.drawText(text, fontConfig.font, x, y, operations, ctx);
 
         return canvas;
     },
 
-    /**
-     * Draws a text with a given set of operations
-     *
-     * @param {String} text The text to draw
-     * @param {String} font The font to use
-     * @param {Number} x The x position to draw on
-     * @param {Number} y The y position to draw on
-     * @param {Object[]} operations The operations to perform
-     * @param {CanvasRenderingContext2D} ctx The context to draw on
-     * @param {Number} [maxWidth] The max width of the text
-     *
-     *
-     *     var text = "hello";
-     *     var font = "100px Verdana";
-     *     var x = 100;
-     *     var y = 150;
-     *     var operations = [
-     *         {
-     *             shadowColor : "rgba( 248, 116, 0, 0.8 )",
-     *             shadowBlur : 20,
-     *             drawType : "fill"
-     *         },
-     *         {
-     *             shadowColor : "rgba( 248, 116, 0, 0.8 )",
-     *             shadowBlur : 20,
-     *             drawType : "fill"
-     *         },
-     *         {
-     *             shadowColor : "rgba( 248, 116, 0, 0.8 )",
-     *             shadowBlur : 20,
-     *             drawType : "fill"
-     *         },
-     *         {
-     *             fillStyle : "rgba( 255, 255, 255, 1 )",
-     *             shadowColor : "rgba( 255, 205, 8, 1 )",
-     *             shadowBlur : 5,
-     *             drawType : "fill"
-     *         },
-     *         {
-     *             strokeStyle : "rgba( 255, 205, 8, 1 )",
-     *             lineWidth : 1,
-     *             shadowBlur : 0,
-     *             drawType : "stroke"
-     *         }
-     *     ];
-     *
-     *     Animation.utils.text.performOperations(text, font, x, y, operation, ctx);
-     */
-
-    performOperations : function (text, font, x, y, operations, ctx, maxWidth) {
+    drawText : function (text, font, x, y, operations, ctx, maxWidth) {
         var drawType, posX, posY;
 
         ctx.shadowOffsetX = 0;
@@ -122,23 +73,18 @@ Text = {
     shrinkFont: function(text, fontSize, fontFamily, offset, maxWidth, ctx) {
         var originalFontSize = fontSize,
             font, dimensions;
-
         do {
             font = fontSize + "px " + fontFamily;
             dimensions = Text.measureText(text, font, offset, ctx);
             fontSize--;
         }
         while (dimensions.width > maxWidth);
-
-        // set the fontSize back to the last valid one.
         fontSize++;
-
         return {font: font, fontSize: fontSize, dimensions: dimensions, sizeOffset: originalFontSize - fontSize};
     },
 
     measureText : function (text, font, offset, ctx) {
         var height = Text.getHeightOfFont(font) * 1.5;
-
         offset = offset || 0;
         ctx.font = font;
         return {

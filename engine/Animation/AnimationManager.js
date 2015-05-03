@@ -91,5 +91,4 @@ AnimationManager = {
         me.previousRenderTime = tnow;
         requestAnimationFrame(me.draw);
     }
-
 };

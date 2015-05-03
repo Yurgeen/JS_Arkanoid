@@ -44,4 +44,4 @@ Background.prototype.start = function(){
     });
 }
 
-ModuleLoader.MODULES["Background"] = Background;
+ModuleLoader.registerModule("Background", Background);
