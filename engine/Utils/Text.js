@@ -27,6 +27,33 @@ Text = {
         return canvas;
     },
 
+    /*  Canvas draw text styles example
+    *    PlainStyle = {
+    *        fillStyle : "grba(255, 0, 0, 1)"
+    *    }
+    *
+    *    GradientStyle = {
+    *       fillStyle = {
+    *           type : "linearGradient",
+    *           linearGradient : [0, 0, 0, 60],
+    *           colorStop : [
+    *               {
+    *                   pos : 0,
+    *                   color : "#FFFFFF"
+    *               },
+    *               {
+    *                   pos : 1,
+    *                   color : "#000000"
+    *               }
+    *           ]
+    *       }
+    *    }
+    *
+    *    GlowStyle = {
+    *
+    *    }
+    }*/
+
     drawText : function (text, font, x, y, operations, ctx, maxWidth) {
         var drawType, posX, posY;
 
@@ -34,30 +61,26 @@ Text = {
         ctx.textBaseline = "middle";
         ctx.font = font;
 
-        for(var i in operations){
-            drawType = operations[i].drawType || "fill";
+        for(var key in operations) {
+            if (!operations.hasOwnProperty(key)) continue;
 
-            for(var j in operations[i]){
-                if(j !== "drawType") {
-                    if(j === "fillStyle" && typeof(operation) === "object" ){
-                        if(operations[i].type === "linearGradient"){
-                            var pos = operations[i].linearGradient,
-                                gradient = ctx.createLinearGradient(pos[0], pos[1], pos[2], pos[3]);
-                            for(var k in operations[i].colorStop) {
-                                gradient.addColorStop(operations[i].colorStop[k].pos, operations[i].colorStop[k].rgb);
-                            }
-                            ctx.fillStyle = gradient;
-                        }
+            drawType = operations[key].drawType || "fill";
 
+            if (key === "fillStyle" && typeof(operations[key]) === "object") {
+                if (operations[key].type === "linearGradient") {
+                    var pos = operations[key].linearGradient,
+                        gradient = ctx.createLinearGradient(pos[0], pos[1], pos[2], pos[3]);
+                    for (var k in operations[key].colorStop) {
+                        gradient.addColorStop(operations[key].colorStop[k].pos, operations[key].colorStop[k].color);
                     }
-                    else {
-                        ctx[j] = operations[i];
-                    }
+                    ctx.fillStyle = gradient;
                 }
+            } else {
+                ctx[key] = operations[key];
             }
 
-            posX = (operations[i].offsetX + x) || x;
-            posY = (operations[i].offsetY + y) || y;
+            posX = (operations[key].offsetX + x) || x;
+            posY = (operations[key].offsetY + y) || y;
 
             if(maxWidth) {
                 ctx[drawType + "Text"](text, posX, posY, maxWidth);
