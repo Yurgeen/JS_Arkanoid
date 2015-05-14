@@ -1,49 +1,43 @@
+var ANIMATION_ITEM_DEFAULT_CONFIG = {
+    alive : true,
+    visible : false,
+    active : false,
+    localTime : 0
+};
+
 function AnimationItem(config) {
     var me = this,
-        depths,
         id = AnimationManager.getNewItemID;
 
-    me.alive = true;
-    me.visible = false;
-    me.active = false;
-    me.localTime = 0;
+    Utils.apply(me, ANIMATION_ITEM_DEFAULT_CONFIG);
 
-    me.image = config.image;
-    me.x = config.x || 0;
-    me.y = config.y || 0;
-    me.width = config.width || me.image.width;
-    me.height = config.height || me.image.height;
-    me.spriteConfig = config.spriteConfig;
-    me.fps = config.fps;
-    me.setDepths = function(value) {
-        depths = value || 0;
-    };
-    me.getDepths = function(){
-        return depths;
-    };
+    if (config.image) {
+        me.x = config.x || 0;
+        me.y = config.y || 0;
+        me.width = config.width || me.image.width;
+        me.height = config.height || me.image.height;
+    }
 
-    me.setDepths(config.depth);
+    if (config) {
+        Utils.apply(me, config);
+    }
+
+    me.id = id;
 }
 
-AnimationItem.prototype.doStep = function(dt) {
-    var me = this;
-    me.localTime += dt;
-    me.animationFunction();
-};
 
-AnimationItem.prototype.animationFunction = function () {
-
-};
+/* Lifecycle methods */
 
 AnimationItem.prototype.checkAlive = function(){
     var me = this;
-    return me.isAlive;
+    return me.alive;
 };
 
-AnimationItem.prototype.onCollision = function() {
-    var me = this;
-    me.isAlive = false;
-};
+AnimationItem.prototype.animationFunction = function () {};
+
+AnimationItem.prototype.onCollision = function() {};
+
+/* Control methods */
 
 AnimationItem.prototype.play = function() {
     var me = this;
@@ -62,4 +56,15 @@ AnimationItem.prototype.stop = function(){
     me.active = false;
     me.visible = false;
     me.localTime = 0;
+};
+
+AnimationItem.prototype.doStep = function(dt) {
+    var me = this;
+    me.localTime += dt;
+    if (me.checkAlive()) {
+        me.animationFunction();
+    }
+    else {
+        me.stop();
+    }
 };

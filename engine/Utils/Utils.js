@@ -6,5 +6,11 @@ Utils = {
                 ++count;
         }
         return count;
+    },
+
+    apply : function(obj, ext) {
+        for (var key in ext){
+            obj[key] = ext[key]
+        }
     }
 }
