@@ -51,15 +51,20 @@ function Splash() {
     AnimationManager.addItem(me.textItem);
 };
 
-Splash.prototype.show = function(){
-    var me = this;
-    me.logoItem.play();
-    me.backgroundItem.play();
-    me.textItem.play();
+Splash.prototype.EventCallbacks = {
+    "request:Splash.show" : this.show,
+    "request:Splash.hide" : this.hide
 };
 
-Splash.prototype.resumeGame = function () {
+Splash.prototype.show = function(){
+    var me = this;
+    me.logoItem.restore();
+    me.backgroundItem.restore();
+    me.textItem.restore();
+};
 
+Splash.prototype.hide = function () {
+    EventHandler.fireEvent("notify:Splash.closed");
 };
 
 ModuleLoader.MODULES["Splash"] = Splash;

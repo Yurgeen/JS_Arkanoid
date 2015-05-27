@@ -1,5 +1,6 @@
 AnimationManager = {
     layers : [],
+    items : [],
 
     init : function(callback) {
         var me = AnimationManager,
@@ -29,7 +30,7 @@ AnimationManager = {
             depth = item.getDepths();
         if (!me.layers[depth]) {
             me.layers[depth] = []
-        };
+        }
         me.layers[depth].push(item);
     },
 
