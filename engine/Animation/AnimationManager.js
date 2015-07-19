@@ -44,6 +44,7 @@ AnimationManager = {
         var me = AnimationManager;
 
         CollisionManager.processCollisions();
+        SpriteManager.processFrame(dt);
 
         me.layers.forEach(function(element){
             element.forEach(function(item){

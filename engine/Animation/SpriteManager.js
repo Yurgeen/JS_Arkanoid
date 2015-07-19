@@ -9,29 +9,41 @@ SpriteManager = {
     processFrame: function (dt) {
         var me = SpriteManager;
         me._localTime += dt;
+        me.processSprites();
     },
 
-    getCurrentSpriteForEachGroup: function() {
-        var me = SpriteManager;
+    processSprites: function() {
+        var me = SpriteManager,
+            newValue, dn;
         for (var fps in me._fpsGroups) {
-
+            newValue = Math.ceil((me._localTime * fps)/1000);
+            if (me._fpsGroups[fps].abstractCounter.prevValue === -1){
+                me._fpsGroups[fps].abstractCounter.prevValue = newValue;
+            }
+            dn = newValue - me._fpsGroups[fps].abstractCounter.prevValue;
+            me._fpsGroups[fps].clients.forEach(function (client) {
+                client.item.sprite = client.item.sprite + dn > client.size ? 0 : client.item.sprite + dn;
+            });
+            me._fpsGroups[fps].abstractCounter.prevValue = newValue;
         }
-    },
-
-    updateSpriteValue: function(item) {
-
     },
 
     registerItem: function (item, fps, loop) {
         var me = SpriteManager;
 
-        if (!Utils.isDefined(me.fpsGroups[fps])) {
-            me.fpsGroups[fps] = [];
+        if (!Utils.isDefined(me._fpsGroups[fps])) {
+            me._fpsGroups[fps] = {
+                abstractCounter: {
+                    prevValue: -1
+                },
+                clients: []
+            };
         }
 
-        me.fpsGroups[fps].push({
+        me._fpsGroups[fps].clients.push({
             item: item,
-            lastSprite: ResourceManager.graphics[item.image].spriteConfig.length
+            size: ResourceManager.graphics[item.image].spriteConfig.length - 1,
+            loop: loop || true
         });
     }
 };

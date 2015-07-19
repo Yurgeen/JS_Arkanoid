@@ -25,6 +25,7 @@ function Enemies() {
 
         me.items.push(item);
 
+        SpriteManager.registerItem(item, 30, true);
         CollisionManager.registerItem(item, Enemy.TYPE);
         AnimationManager.addItem(item);
     }
