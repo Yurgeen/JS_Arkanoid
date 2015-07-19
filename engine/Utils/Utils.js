@@ -12,5 +12,9 @@ Utils = {
         for (var key in ext){
             obj[key] = ext[key]
         }
+    },
+
+    isDefined : function(variable) {
+        return (typeof variable != 'undefined');
     }
 }

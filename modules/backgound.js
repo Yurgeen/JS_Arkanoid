@@ -56,4 +56,4 @@ Background.prototype.start = function(){
     me.item.play();
 };
 
-ModuleLoader.registerModule("Background", Background);
+//ModuleLoader.registerModule("Background", Background);

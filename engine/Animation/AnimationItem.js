@@ -30,6 +30,7 @@ function AnimationItem(config) {
     Utils.apply(me, ANIMATION_ITEM_DEFAULT_CONFIG);
 
     if (config.image) {
+        me.image = config.image;
         me.x = config.x || 0;
         me.y = config.y || 0;
         me.width = config.width || me.image.width;
@@ -51,6 +52,8 @@ AnimationItem.prototype.checkAlive = function(){
 };
 
 AnimationItem.prototype.animationFunction = function () {};
+
+AnimationItem.prototype.onCollided = function() {};
 
 /* Control methods */
 

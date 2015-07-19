@@ -43,7 +43,7 @@ AnimationManager = {
     performAnimation : function(dt) {
         var me = AnimationManager;
 
-        //ToDo: add here CollisionManger implementation
+        CollisionManager.processCollisions();
 
         me.layers.forEach(function(element){
             element.forEach(function(item){
@@ -98,19 +98,19 @@ AnimationManager = {
 
         //Image or sprite animation
         if (item.image) {
-            var img = ResourceManager.graphics[item.image].image,
-                sx = 0,sy = 0,
-                swidth = item.image.width,
-                sheight = item.image.height;
+            var res = ResourceManager.graphics[item.image],
+                sx = 0, sy = 0,
+                swidth = res.image.width,
+                sheight = res.image.height;
 
-            if (item.image.spriteConfig && item.sprite) {
-                sx = item.spriteConfig[item.sprite].x;
-                sy = item.spriteConfig[item.sprite].y;
-                swidth = item.spriteConfig.width;
-                sheight = item.spriteConfig.height;
+            if (Utils.isDefined(res.spriteConfig) && Utils.isDefined(item.sprite)) {
+                sx = res.spriteConfig[item.sprite].x;
+                sy = res.spriteConfig[item.sprite].y;
+                swidth = res.spriteConfig.width;
+                sheight = res.spriteConfig.height;
             }
 
-            ctx.drawImage(img, sx, sy, swidth, sheight,
+            ctx.drawImage(res.image, sx, sy, swidth, sheight,
                 item.x, item.y, item.width, item.height);
         }
 
