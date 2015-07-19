@@ -2,12 +2,30 @@ var ANIMATION_ITEM_DEFAULT_CONFIG = {
     alive : true,
     visible : false,
     active : false,
+    layer : 0,
     localTime : 0
 };
 
+/** Animation item class
+ *
+ * @param config
+ * @constructor
+ *
+ * Configurable fields:
+ *
+ *  x, y - position coordinates
+ *  width, height - display size
+ *  image - reference to image resource
+ *  sprite - frame number of image sprite
+ *  rotation - angle of rotation [0-360]
+ *  opacity - transparency value [0-1]
+ *  layer - overlay value
+ *  visible - visibility flag
+ *
+ */
+
 function AnimationItem(config) {
-    var me = this,
-        id = AnimationManager.getNewItemID;
+    var me = this;
 
     Utils.apply(me, ANIMATION_ITEM_DEFAULT_CONFIG);
 
@@ -22,7 +40,6 @@ function AnimationItem(config) {
         Utils.apply(me, config);
     }
 
-    me.id = id;
 }
 
 
@@ -34,8 +51,6 @@ AnimationItem.prototype.checkAlive = function(){
 };
 
 AnimationItem.prototype.animationFunction = function () {};
-
-AnimationItem.prototype.onCollision = function() {};
 
 /* Control methods */
 
@@ -49,7 +64,7 @@ AnimationItem.prototype.pause = function() {
     var me = this;
     me.active = false;
     me.visible = true;
-}
+};
 
 AnimationItem.prototype.stop = function(){
     var me = this;
