@@ -6,7 +6,7 @@
 AnimationManager = {
 
     layers : [],
-    items : [],
+    items : {},
 
     init : function(callback) {
         var me = AnimationManager,
@@ -33,7 +33,14 @@ AnimationManager = {
             me.layers[layer] = []
         }
 
-        me.layers[layer].push(item);
+        me.layers[layer][item.id] = item;
+    },
+
+    getNewItemID : function(){
+        var ID = 0;
+        return (function() {
+            return ID++;
+        })();
     },
 
     removeItem : function(item) {

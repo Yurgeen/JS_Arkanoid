@@ -21,9 +21,11 @@ SpriteManager = {
                 me._fpsGroups[fps].abstractCounter.prevValue = newValue;
             }
             dn = newValue - me._fpsGroups[fps].abstractCounter.prevValue;
-            me._fpsGroups[fps].clients.forEach(function (client) {
+
+            //ToDo: Make it work for objects
+            /*me._fpsGroups[fps].clients.forEach(function (client) {
                 client.item.sprite = client.item.sprite + dn > client.size ? 0 : client.item.sprite + dn;
-            });
+            });*/
             me._fpsGroups[fps].abstractCounter.prevValue = newValue;
         }
     },
@@ -36,14 +38,14 @@ SpriteManager = {
                 abstractCounter: {
                     prevValue: -1
                 },
-                clients: []
+                clients: {}
             };
         }
 
-        me._fpsGroups[fps].clients.push({
+        me._fpsGroups[fps].clients[item.id] = {
             item: item,
             size: ResourceManager.graphics[item.image].spriteConfig.length - 1,
             loop: loop || true
-        });
+        };
     }
 };

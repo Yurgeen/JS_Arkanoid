@@ -41,6 +41,7 @@ function AnimationItem(config) {
         Utils.apply(me, config);
     }
 
+    me.id = AnimationManager.getNewItemID();
 }
 
 
