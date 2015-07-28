@@ -67,4 +67,4 @@ Splash.prototype.hide = function () {
     EventHandler.fireEvent("notify:Splash.closed");
 };
 
-ModuleLoader.MODULES["Splash"] = Splash;
+//ModuleLoader.MODULES["Splash"] = Splash;

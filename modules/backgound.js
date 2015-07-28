@@ -20,6 +20,11 @@ function Background() {
     AnimationManager.addItem(me.item);
 }
 
+Background.prototype.start = function(){
+    var me = this;
+    me.item.play();
+};
+
 Background.prototype.createBgPattern = function(){
     var me = this,
         canvas = document.createElement("canvas"),

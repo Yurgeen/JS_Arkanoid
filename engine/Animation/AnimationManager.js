@@ -36,12 +36,12 @@ AnimationManager = {
         me.layers[layer][item.id] = item;
     },
 
-    getNewItemID : function(){
+    getNewItemID :(function(){
         var ID = 0;
         return (function() {
             return ID++;
-        })();
-    },
+        });
+    })(),
 
     removeItem : function(item) {
 
@@ -106,8 +106,15 @@ AnimationManager = {
 
         //Image or sprite animation
         if (item.image) {
-            var res = ResourceManager.graphics[item.image],
-                sx = 0, sy = 0,
+            var res;
+
+            if ((typeof item.image) === "string" ) {
+                res = ResourceManager.graphics[item.image];
+            } else {
+                res = {image: item.image};
+            }
+
+            var sx = 0, sy = 0,
                 swidth = res.image.width,
                 sheight = res.image.height;
 

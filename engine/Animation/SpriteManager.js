@@ -16,16 +16,24 @@ SpriteManager = {
         var me = SpriteManager,
             newValue, dn;
         for (var fps in me._fpsGroups) {
+
+            if (!me._fpsGroups.hasOwnProperty(fps)){
+                continue;
+            }
+
             newValue = Math.ceil((me._localTime * fps)/1000);
+
             if (me._fpsGroups[fps].abstractCounter.prevValue === -1){
                 me._fpsGroups[fps].abstractCounter.prevValue = newValue;
             }
+
             dn = newValue - me._fpsGroups[fps].abstractCounter.prevValue;
 
-            //ToDo: Make it work for objects
-            /*me._fpsGroups[fps].clients.forEach(function (client) {
-                client.item.sprite = client.item.sprite + dn > client.size ? 0 : client.item.sprite + dn;
-            });*/
+            for (var c in me._fpsGroups[fps].clients) {
+                var client = me._fpsGroups[fps].clients[c];
+                client.item.sprite = client.item.sprite + dn > client.size -1? 0 : client.item.sprite + dn;
+            }
+
             me._fpsGroups[fps].abstractCounter.prevValue = newValue;
         }
     },

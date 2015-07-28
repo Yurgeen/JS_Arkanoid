@@ -6,12 +6,12 @@ function Enemies() {
 
     me.items = [];
 
-    for(var i = 0; i < 5; i++) {
+    for(var i = 0; i < 10; i++) {
         item = new Enemy({
             image : "bird",
             x : Math.random() * AnimationManager.width,
             y : Math.random() * AnimationManager.height,
-            layer : 3,
+            layer : 5,
             width : 50,
             height : 50,
             sprite : 0,
@@ -29,7 +29,7 @@ function Enemies() {
         CollisionManager.registerItem(item, Enemy.TYPE);
         AnimationManager.addItem(item);
     }
-};
+}
 
 Enemies.prototype.start = function()
 {
