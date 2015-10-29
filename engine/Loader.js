@@ -39,6 +39,7 @@ ModuleLoader = {
         var me = ModuleLoader;
         for (var key in me.MODULES) {
             Modules[key] = new me.MODULES[key];
+            EventSystem.registerModule(key, Modules[key]);
             Modules[key].start();
         }
         ModuleLoader.checkModulesLoaded();

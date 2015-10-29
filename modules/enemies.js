@@ -37,6 +37,7 @@ Enemies.prototype.start = function()
     for (var i = 0; i < me.items.length; i++) {
         me.items[i].play();
     }
+    me.fireEvent("request:background.sayHi", "wazzup");
 };
 
 /** Single enemy declaration */

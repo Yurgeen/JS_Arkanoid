@@ -17,4 +17,4 @@ Utils = {
     isDefined : function(variable) {
         return (typeof variable != 'undefined');
     }
-}
+};

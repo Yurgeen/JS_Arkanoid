@@ -20,6 +20,17 @@ function Background() {
     AnimationManager.addItem(me.item);
 }
 
+Background.prototype.registerEvents = function() {
+    var me = this;
+    return {
+        "request:background.sayHi": me.sayHi
+    };
+};
+
+Background.prototype.sayHi = function (someText) {
+    console.log("Hi, its event testing, with arguments " + someText);
+};
+
 Background.prototype.start = function(){
     var me = this;
     me.item.play();
