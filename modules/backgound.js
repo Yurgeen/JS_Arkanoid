@@ -1,75 +1,73 @@
-function Background() {
-    var me = this,
-        bgItem, bgCtx;
+var BackgroundModuleConfig = {
 
-    me.fps = 120;
+    subscribe: function() {
+        var me = this;
+        return {
+            "request:background.sayHi": me.sayHi
+        };
+    },
 
-    bgItem = new AnimationItem({
-        image: me.createBgPattern(),
-        x: 0,
-        y: 0
-    });
+    constructor: function() {
+        var me = this,
+            bgItem, bgCtx;
 
-    bgCtx = bgItem.image.getContext("2d");
+        me.fps = 120;
 
-    bgItem.animationFunction = function() {
-        me.redrawPattern(bgCtx, this.localTime);
-    };
+        bgItem = new AnimationItem({
+            image: me.createBgPattern(),
+            x: 0,
+            y: 0
+        });
 
-    me.item = bgItem;
-    AnimationManager.addItem(me.item);
-}
+        bgCtx = bgItem.image.getContext("2d");
 
-Background.prototype.registerEvents = function() {
-    var me = this;
-    return {
-        "request:background.sayHi": me.sayHi
-    };
-};
+        bgItem.animationFunction = function() {
+            me.redrawPattern(bgCtx, this.localTime);
+        };
 
-Background.prototype.sayHi = function (someText) {
-    console.log("Hi, its event testing, with arguments " + someText);
-};
+        me.item = bgItem;
+        AnimationManager.addItem(me.item);
+    },
 
-Background.prototype.start = function(){
-    var me = this;
-    me.item.play();
-};
+    sayHi: function (someText) {
+        console.log("Hi, its event testing, with arguments " + someText);
+    },
 
-Background.prototype.createBgPattern = function(){
-    var me = this,
-        canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d");
+    start: function(){
+        var me = this;
+        me.item.play();
+    },
 
-    canvas.width = AnimationManager.width;
-    canvas.height = AnimationManager.height;
-    me.redrawPattern(ctx, 0);
-    return canvas;
-};
+    createBgPattern: function(){
+        var me = this,
+            canvas = document.createElement("canvas"),
+            ctx = canvas.getContext("2d");
 
-Background.prototype.redrawPattern = function(ctx, time){
-    var me = this,
-        pattern = ResourceManager.graphics["sky"].image,
-        frameHeight = pattern.height,
-        frameWidth = pattern.width,
-        sceneHeight = ctx.canvas.height,
-        sceneWidth = ctx.canvas.width,
-        r = Math.floor(sceneHeight/frameHeight),
-        c = Math.floor(sceneWidth/frameWidth),
-        n;
+        canvas.width = AnimationManager.width;
+        canvas.height = AnimationManager.height;
+        me.redrawPattern(ctx, 0);
+        return canvas;
+    },
 
-    n = Math.round((time*me.fps/1000) % frameHeight) || 0;
+    redrawPattern: function(ctx, time) {
+        var me = this,
+            pattern = ResourceManager.graphics["sky"].image,
+            frameHeight = pattern.height,
+            frameWidth = pattern.width,
+            sceneHeight = ctx.canvas.height,
+            sceneWidth = ctx.canvas.width,
+            r = Math.floor(sceneHeight / frameHeight),
+            c = Math.floor(sceneWidth / frameWidth),
+            n;
 
-    for (var i = -1; i <= r; i++) {
-        for(var j = 0; j <= c; j++) {
-            ctx.drawImage(pattern, j*frameWidth, i*frameHeight + n);
+        n = Math.round((time * me.fps / 1000) % frameHeight) || 0;
+
+        for (var i = -1; i <= r; i++) {
+            for (var j = 0; j <= c; j++) {
+                ctx.drawImage(pattern, j * frameWidth, i * frameHeight + n);
+            }
         }
     }
 };
 
-Background.prototype.start = function(){
-    var me = this;
-    me.item.play();
-};
-
-ModuleLoader.registerModule("Background", Background);
+ModuleLoader.registerModule("Background", BackgroundModuleConfig);

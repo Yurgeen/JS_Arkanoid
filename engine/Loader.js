@@ -20,9 +20,15 @@ ModuleLoader = {
         });
     },
 
-    registerModule : function(moduleName, moduleConstructor) {
-        var me = ModuleLoader;
-        me.MODULES[moduleName] = moduleConstructor;
+    registerModule : function(moduleName, moduleConfig) {
+        var list = ModuleLoader.MODULES;
+
+        if (!Utils.isDefined(list[moduleName])) {
+            list[moduleName] = moduleConfig.constructor || function() {};
+            list[moduleName].prototype = moduleConfig;
+        } else {
+            console.error("Module " + moduleName + " already exists");
+        }
     },
 
     checkCoreLoaded : function (name) {
