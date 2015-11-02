@@ -28,8 +28,8 @@ CollisionManager = {
 
     checkCouple: function(couple) {
         var me = CollisionManager,
-            cop1 = me.types[couple[0]],
-            cop2 = me.types[couple[1]];
+            cop1 = me.types[couple[0]] || [],
+            cop2 = me.types[couple[1]] || [];
 
         cop1.forEach(function(item1) {
             cop2.forEach(function(item2){

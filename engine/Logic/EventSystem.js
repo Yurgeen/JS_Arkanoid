@@ -19,7 +19,7 @@ EventSystem = {
      *
      */
 
-    fireEvent: function(event) {
+    fireEvent: function(e) {
         var me = EventSystem,
             subs;
 
@@ -27,7 +27,7 @@ EventSystem = {
             if (me.EventMap.hasOwnProperty(module)) {
                 subs = me.EventMap[module].subscriptions;
                 for (var event in subs) {
-                    if (subs.hasOwnProperty(event)) {
+                    if (subs.hasOwnProperty(event) && e === event) {
                         subs[event].apply(me.EventMap[module].context, Array.prototype.slice.call(arguments, 1));
                     }
                 }
@@ -40,7 +40,7 @@ EventSystem = {
         if (!Utils.isDefined(me.EventMap[name])) {
             me.EventMap[name] = {
                 context: instance,
-                subscriptions: (instance.registerEvents && instance.registerEvents()) || {}
+                subscriptions: (instance.subscribe && instance.subscribe()) || {}
             };
             instance.fireEvent = me.fireEvent;
         } else {

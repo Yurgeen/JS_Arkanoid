@@ -3,8 +3,9 @@ Modules = {};
 ModuleLoader = {
 
     CORE_LOADS : {
-      "ResourceManager" : false,
-      "AnimationManager" : false
+        "ResourceManager" : false,
+        "AnimationManager" : false,
+        "UserInputManager" : false
     },
 
     MODULES : {
@@ -17,6 +18,9 @@ ModuleLoader = {
         });
         AnimationManager.init(function() {
             ModuleLoader.checkCoreLoaded("AnimationManager");
+        });
+        UserInputManager.init(function() {
+            ModuleLoader.checkCoreLoaded("UserInputManager");
         });
     },
 
