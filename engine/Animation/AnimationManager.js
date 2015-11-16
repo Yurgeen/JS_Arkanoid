@@ -82,15 +82,13 @@ AnimationManager = {
         return me.buffer.canvas;
     },
 
-    draw : function()
-    {
+    draw : function(timestamp) {
         var me = AnimationManager,
-            tnow = Date.now(),
             dt;
-        dt = (tnow - me.previousRenderTime) || 0;
+        dt = (timestamp - me.previousRenderTime) || 0;
         AnimationManager.performAnimation(dt);
         me.ctx.drawImage(me.getScene(), 0, 0);
-        me.previousRenderTime = tnow;
+        me.previousRenderTime = timestamp;
         requestAnimationFrame(me.draw);
     },
 
