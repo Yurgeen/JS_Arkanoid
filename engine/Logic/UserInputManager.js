@@ -11,7 +11,11 @@ UserInputManager = {
     },
 
     onMouseMove: function(e) {
-        //console.log(e.clientX, " ", e.clientY);
+        var me = UserInputManager;
+        me.fireEvent("notify:UserInputManager.mouseMove", {
+                    x: e.clientX,
+                    y: e.clientY
+                });
     },
 
     onMouseClick : function(e, right) {

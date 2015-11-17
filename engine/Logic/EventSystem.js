@@ -15,9 +15,7 @@ EventSystem = {
     EventMap: {},
 
 
-    /** Function injected into all modules
-     *
-     */
+    /** Function injected into all modules */
 
     fireEvent: function(e) {
         var me = EventSystem,
@@ -44,7 +42,7 @@ EventSystem = {
             };
             instance.fireEvent = me.fireEvent;
         } else {
-            console.log(Error("Module " + name + ", already registed"));
+            console.error("Module " + name + ", already registed");
         }
     }
 };

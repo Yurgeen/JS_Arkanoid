@@ -1,0 +1,1 @@
+ModuleLoader.init(AnimationManager.draw);

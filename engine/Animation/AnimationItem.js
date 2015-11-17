@@ -1,11 +1,3 @@
-var ANIMATION_ITEM_DEFAULT_CONFIG = {
-    alive : true,
-    visible : false,
-    active : false,
-    layer : 0,
-    localTime : 0
-};
-
 /** Animation item class
  *
  * @param config
@@ -27,7 +19,7 @@ var ANIMATION_ITEM_DEFAULT_CONFIG = {
 function AnimationItem(config) {
     var me = this;
 
-    Utils.apply(me, ANIMATION_ITEM_DEFAULT_CONFIG);
+    Utils.apply(me, me.ANIMATION_ITEM_DEFAULT_CONFIG);
 
     if (config.image) {
         me.image = config.image;
@@ -44,6 +36,13 @@ function AnimationItem(config) {
     me.id = AnimationManager.getNewItemID();
 }
 
+AnimationItem.prototype.ANIMATION_ITEM_DEFAULT_CONFIG = {
+    alive : true,
+    visible : false,
+    active : false,
+    layer : 0,
+    localTime : 0
+};
 
 /* Lifecycle methods */
 

@@ -1,4 +1,4 @@
-var BackgroundModuleConfig = {
+ModConf.Background = {
 
     subscribe: function() {
         var me = this;
@@ -15,8 +15,8 @@ var BackgroundModuleConfig = {
 
         bgItem = new AnimationItem({
             image: me.createBgPattern(),
-            x: 0,
-            y: 0
+            x: AnimationManager.width/2,
+            y: AnimationManager.height/2
         });
 
         bgCtx = bgItem.image.getContext("2d");
@@ -70,4 +70,4 @@ var BackgroundModuleConfig = {
     }
 };
 
-ModuleLoader.registerModule("Background", BackgroundModuleConfig);
+ModuleLoader.registerModule("Background", ModConf.Background);

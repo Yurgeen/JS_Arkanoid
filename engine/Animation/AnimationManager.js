@@ -93,8 +93,14 @@ AnimationManager = {
     },
 
     drawItem: function(item, ctx) {
-
         if (!item.visible) return;
+
+        ctx.save();
+
+        //Set position
+        //ctx.translate(item.x, item.y);
+
+        ctx.translate(item.x, item.y);
 
         //Rotation
         ctx.rotate(item.rotation || 0);
@@ -124,12 +130,14 @@ AnimationManager = {
             }
 
             ctx.drawImage(res.image, sx, sy, swidth, sheight,
-                item.x, item.y, item.width, item.height);
+                -item.width/2, -item.height/2, item.width, item.height);
         }
 
         //Canvas
         if (item.canvas) {
             ctx.drawImage(item.canvas, item.x, item.y, item.width, item.height);
         }
+
+        ctx.restore();
     }
 };
