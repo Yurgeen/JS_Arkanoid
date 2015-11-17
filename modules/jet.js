@@ -1,4 +1,6 @@
-ModConf.Jet = {
+Modules.Loader.registerModule({
+
+    MODULE_NAME: "Jet",
 
     subscribe: function() {
         var me = this;
@@ -10,7 +12,7 @@ ModConf.Jet = {
     constructor: function() {
         var me = this;
 
-        me.item = new AnimationItem({
+        me.item = new Animation.Item({
             image: "jet",
             x: 200,
             y: 200,
@@ -19,7 +21,7 @@ ModConf.Jet = {
             layer: 3
         });
 
-        AnimationManager.addItem(me.item);
+        Animation.SceneManager.addItem(me.item);
     },
 
 
@@ -32,6 +34,4 @@ ModConf.Jet = {
         var me = this;
         me.item.rotation = Math.atan2(pos.x -  me.item.x, me.item.y - pos.y);
     }
-};
-
-ModuleLoader.registerModule("Jet", ModConf.Jet);
+});

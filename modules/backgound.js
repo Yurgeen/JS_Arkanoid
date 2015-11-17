@@ -1,4 +1,6 @@
-ModConf.Background = {
+Modules.Loader.registerModule({
+
+    MODULE_NAME: "Background",
 
     subscribe: function() {
         var me = this;
@@ -13,10 +15,10 @@ ModConf.Background = {
 
         me.fps = 120;
 
-        bgItem = new AnimationItem({
+        bgItem = new Animation.Item({
             image: me.createBgPattern(),
-            x: AnimationManager.width/2,
-            y: AnimationManager.height/2
+            x: 0,
+            y: 0
         });
 
         bgCtx = bgItem.image.getContext("2d");
@@ -26,7 +28,7 @@ ModConf.Background = {
         };
 
         me.item = bgItem;
-        AnimationManager.addItem(me.item);
+        Animation.SceneManager.addItem(me.item);
     },
 
     sayHi: function (someText) {
@@ -43,15 +45,15 @@ ModConf.Background = {
             canvas = document.createElement("canvas"),
             ctx = canvas.getContext("2d");
 
-        canvas.width = AnimationManager.width;
-        canvas.height = AnimationManager.height;
+        canvas.width = Animation.SceneManager.width;
+        canvas.height = Animation.SceneManager.height;
         me.redrawPattern(ctx, 0);
         return canvas;
     },
 
     redrawPattern: function(ctx, time) {
         var me = this,
-            pattern = ResourceManager.graphics["sky"].image,
+            pattern = Modules.ResourceManager.graphics["sky"].image,
             frameHeight = pattern.height,
             frameWidth = pattern.width,
             sceneHeight = ctx.canvas.height,
@@ -68,6 +70,4 @@ ModConf.Background = {
             }
         }
     }
-};
-
-ModuleLoader.registerModule("Background", ModConf.Background);
+});

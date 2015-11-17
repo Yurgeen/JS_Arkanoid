@@ -16,7 +16,7 @@
  *
  */
 
-function AnimationItem(config) {
+Animation.Item = function (config) {
     var me = this;
 
     Utils.apply(me, me.ANIMATION_ITEM_DEFAULT_CONFIG);
@@ -27,16 +27,17 @@ function AnimationItem(config) {
         me.y = config.y || 0;
         me.width = config.width || me.image.width;
         me.height = config.height || me.image.height;
+        me.center = config.center || {x: Math.ceil(me.width/2), y: Math.ceil(me.height/2)};
     }
 
     if (config) {
         Utils.apply(me, config);
     }
 
-    me.id = AnimationManager.getNewItemID();
-}
+    me.id = Animation.SceneManager.getNewItemID();
+};
 
-AnimationItem.prototype.ANIMATION_ITEM_DEFAULT_CONFIG = {
+Animation.Item.prototype.ANIMATION_ITEM_DEFAULT_CONFIG = {
     alive : true,
     visible : false,
     active : false,
@@ -46,37 +47,37 @@ AnimationItem.prototype.ANIMATION_ITEM_DEFAULT_CONFIG = {
 
 /* Lifecycle methods */
 
-AnimationItem.prototype.checkAlive = function(){
+Animation.Item.prototype.checkAlive = function(){
     var me = this;
     return me.alive;
 };
 
-AnimationItem.prototype.animationFunction = function () {};
+Animation.Item.prototype.animationFunction = function () {};
 
-AnimationItem.prototype.onCollided = function() {};
+Animation.Item.prototype.onCollided = function() {};
 
 /* Control methods */
 
-AnimationItem.prototype.play = function() {
+Animation.Item.prototype.play = function() {
     var me = this;
     me.visible = true;
     me.active = true;
 };
 
-AnimationItem.prototype.pause = function() {
+Animation.Item.prototype.pause = function() {
     var me = this;
     me.active = false;
     me.visible = true;
 };
 
-AnimationItem.prototype.stop = function(){
+Animation.Item.prototype.stop = function(){
     var me = this;
     me.active = false;
     me.visible = false;
     me.localTime = 0;
 };
 
-AnimationItem.prototype.doStep = function(dt) {
+Animation.Item.prototype.doStep = function(dt) {
     var me = this;
     me.localTime += dt;
     if (me.checkAlive()) {

@@ -1,10 +1,10 @@
 Enemy = function(config) {
     var me = this;
-    AnimationItem.call(me, config);
+    Animation.Item.call(me, config);
     me.direction = 0;
 };
 
-Enemy.prototype = new AnimationItem({
+Enemy.prototype = new Animation.Item({
 
     TYPE: "enemy",
 
@@ -14,11 +14,11 @@ Enemy.prototype = new AnimationItem({
         me.x += 10*me.direction.x;
         me.y += 10*me.direction.y;
 
-        if ((me.x > AnimationManager.width) || (me.x < 0)) {
+        if ((me.x > Animation.SceneManager.width) || (me.x < 0)) {
             me.direction.x = -me.direction.x;
         }
 
-        if ((me.y > AnimationManager.width) || (me.y < 0)) {
+        if ((me.y > Animation.SceneManager.width) || (me.y < 0)) {
             me.direction.y = -me.direction.y;
         }
     },
@@ -30,6 +30,4 @@ Enemy.prototype = new AnimationItem({
             y: 0
         }
     }
-
 });
-

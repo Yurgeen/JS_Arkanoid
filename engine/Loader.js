@@ -1,6 +1,4 @@
-Modules = {};
-
-ModuleLoader = {
+Modules.Loader = {
 
     CORE_LOADS : {
         "ResourceManager" : false,
@@ -9,23 +7,31 @@ ModuleLoader = {
     },
 
     MODULES : {
+
     },
 
     init : function(onLoadCallback) {
-        ModuleLoader.onLoadCallback = onLoadCallback;
-        ResourceManager.init(function() {
-            ModuleLoader.checkCoreLoaded("ResourceManager");
+        var me = Modules.Loader;
+
+        me.onLoadCallback = onLoadCallback;
+        Modules.ResourceManager.init(function() {
+            me.checkCoreLoaded("ResourceManager");
         });
-        AnimationManager.init(function() {
-            ModuleLoader.checkCoreLoaded("AnimationManager");
+        Animation.SceneManager.init(function() {
+            me.checkCoreLoaded("AnimationManager");
         });
         UserInputManager.init(function() {
-            ModuleLoader.checkCoreLoaded("UserInputManager");
+            me.checkCoreLoaded("UserInputManager");
         });
     },
 
-    registerModule : function(moduleName, moduleConfig) {
-        var list = ModuleLoader.MODULES;
+    registerModule : function(moduleConfig) {
+        var list = Modules.Loader.MODULES,
+            moduleName = moduleConfig.MODULE_NAME;
+
+        if (!Utils.isDefined(moduleName)) {
+            console.error("Cannot load modules");
+        }
 
         if (!Utils.isDefined(list[moduleName])) {
             list[moduleName] = moduleConfig.constructor || function() {};
@@ -36,27 +42,27 @@ ModuleLoader = {
     },
 
     checkCoreLoaded : function (name) {
-        ModuleLoader.CORE_LOADS[name] = true;
-        for (var key in ModuleLoader.CORE_LOADS){
-            if (!ModuleLoader.CORE_LOADS[key]){
+        Modules.Loader.CORE_LOADS[name] = true;
+        for (var key in Modules.Loader.CORE_LOADS){
+            if (!Modules.Loader.CORE_LOADS[key]){
                 return;
             }
         }
-        ModuleLoader.loadModules();
+        Modules.Loader.loadModules();
     },
 
     loadModules : function () {
-        var me = ModuleLoader;
+        var me = Modules.Loader;
         for (var key in me.MODULES) {
             Modules[key] = new me.MODULES[key];
             EventSystem.registerModule(key, Modules[key]);
             Modules[key].start();
         }
-        ModuleLoader.checkModulesLoaded();
+        me.checkModulesLoaded();
     },
 
     checkModulesLoaded : function () {
         console.log("All modules are loaded.");
-        ModuleLoader.onLoadCallback();
+        Modules.Loader.onLoadCallback();
     }
 };

@@ -1,19 +1,19 @@
 /**
  * Created by ninjadragon on 19.07.15.
  */
-SpriteManager = {
+Animation.SpriteManager = {
 
     _fpsGroups: {},
     _localTime: 0,
 
     processFrame: function (dt) {
-        var me = SpriteManager;
+        var me = Animation.SpriteManager;
         me._localTime += dt;
         me.processSprites();
     },
 
     processSprites: function() {
-        var me = SpriteManager,
+        var me = Animation.SpriteManager,
             newValue, dn;
         for (var fps in me._fpsGroups) {
 
@@ -39,7 +39,7 @@ SpriteManager = {
     },
 
     registerItem: function (item, fps, loop) {
-        var me = SpriteManager;
+        var me = Animation.SpriteManager;
 
         if (!Utils.isDefined(me._fpsGroups[fps])) {
             me._fpsGroups[fps] = {
@@ -52,7 +52,7 @@ SpriteManager = {
 
         me._fpsGroups[fps].clients[item.id] = {
             item: item,
-            size: ResourceManager.graphics[item.image].spriteConfig.length - 1,
+            size: Modules.ResourceManager.graphics[item.image].spriteConfig.length - 1,
             loop: loop || true
         };
     }

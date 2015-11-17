@@ -1,15 +1,15 @@
 /** AnimationManager
- * singleton
+ * @singleton
  *
  * */
 
-AnimationManager = {
+Animation.SceneManager = {
 
     layers : [],
     items : {},
 
     init : function(callback) {
-        var me = AnimationManager,
+        var me = Animation.SceneManager,
             scene = document.getElementById("scene"),
             buffer = document.createElement("canvas");
 
@@ -26,7 +26,7 @@ AnimationManager = {
     },
 
     addItem : function(item) {
-        var me = AnimationManager,
+        var me = Animation.SceneManager,
             layer = item.layer;
 
         if (!me.layers[layer]) {
@@ -48,10 +48,10 @@ AnimationManager = {
     },
 
     performAnimation : function(dt) {
-        var me = AnimationManager;
+        var me = Animation.SceneManager;
 
         CollisionManager.processCollisions();
-        SpriteManager.processFrame(dt);
+        Animation.SpriteManager.processFrame(dt);
 
         me.layers.forEach(function(element){
             element.forEach(function(item){
@@ -65,7 +65,7 @@ AnimationManager = {
     },
 
     getScene : function() {
-        var me = AnimationManager;
+        var me = Animation.SceneManager;
 
         //Clear buffer
         //May be removed
@@ -83,10 +83,10 @@ AnimationManager = {
     },
 
     draw : function(timestamp) {
-        var me = AnimationManager,
+        var me = Animation.SceneManager,
             dt;
         dt = (timestamp - me.previousRenderTime) || 0;
-        AnimationManager.performAnimation(dt);
+        me.performAnimation(dt);
         me.ctx.drawImage(me.getScene(), 0, 0);
         me.previousRenderTime = timestamp;
         requestAnimationFrame(me.draw);
@@ -98,9 +98,7 @@ AnimationManager = {
         ctx.save();
 
         //Set position
-        //ctx.translate(item.x, item.y);
-
-        ctx.translate(item.x, item.y);
+        ctx.translate(item.x + item.center.x, item.y + item.center.y);
 
         //Rotation
         ctx.rotate(item.rotation || 0);
@@ -113,7 +111,7 @@ AnimationManager = {
             var res;
 
             if ((typeof item.image) === "string" ) {
-                res = ResourceManager.graphics[item.image];
+                res = Modules.ResourceManager.graphics[item.image];
             } else {
                 res = {image: item.image};
             }
@@ -130,7 +128,7 @@ AnimationManager = {
             }
 
             ctx.drawImage(res.image, sx, sy, swidth, sheight,
-                -item.width/2, -item.height/2, item.width, item.height);
+                -item.center.x, -item.center.y, item.width, item.height);
         }
 
         //Canvas

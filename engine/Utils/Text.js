@@ -1,4 +1,4 @@
-Text = {
+Utils.Text = {
 
     getTextImage: function (text, fontSize, fontFamily, offset, maxWidth, operations) {
         var fontConfig, canvas, ctx, x, y;
@@ -120,4 +120,4 @@ Text = {
         return parseInt(/(\d*)px/.exec(font)[1], 10);
     }
 
-}
+};

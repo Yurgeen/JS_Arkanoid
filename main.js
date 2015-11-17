@@ -1,1 +1,1 @@
-ModuleLoader.init(AnimationManager.draw);
+Modules.Loader.init(Animation.SceneManager.draw);

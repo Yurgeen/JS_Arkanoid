@@ -1,4 +1,4 @@
-ResourceManager = {
+Modules.ResourceManager = {
 
     GRAPHICS_CONFIG : [
         "resources/graphics.json"
@@ -9,7 +9,7 @@ ResourceManager = {
     ],
 
     init : function(callback) {
-        var me = ResourceManager;
+        var me = Modules.ResourceManager;
 
         me.graphics = {};
         me.audio = {};
@@ -23,7 +23,7 @@ ResourceManager = {
     },
 
     loadGraphics : function(configFile) {
-        var me = ResourceManager,
+        var me = Modules.ResourceManager,
             req = new XMLHttpRequest(),
             config;
 
@@ -89,4 +89,4 @@ ResourceManager = {
             me.callback();
         }
     }
-}
+};

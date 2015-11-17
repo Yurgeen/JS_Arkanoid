@@ -1,4 +1,7 @@
-//Creating global variables
-Game = {};
-ModConf = {};
-Engine = {};
+//Container for game modules
+Modules = {};
+
+//Animation lib
+Animation = {};
+
+//
