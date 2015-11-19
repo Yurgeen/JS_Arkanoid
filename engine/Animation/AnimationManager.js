@@ -3,6 +3,8 @@
  *
  * */
 
+Animation = {};
+
 Animation.SceneManager = {
 
     layers : [],

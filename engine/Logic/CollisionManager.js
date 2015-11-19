@@ -11,19 +11,14 @@ CollisionManager = {
      * @param type String
      */
     registerItem: function(item, type) {
-        var me = CollisionManager;
-
-        if (!Utils.isDefined(me.types[type])) {
-            me.types[type] = [];
+        if (!Utils.isDefined(this.types[type])) {
+            this.types[type] = [];
         }
-
-        me.types[type].push(item);
+        this.types[type].push(item);
     },
 
     processCollisions: function() {
-        var me = CollisionManager;
-        me.couples.forEach(me.checkCouple);
-
+        this.couples.forEach(this.checkCouple);
     },
 
     checkCouple: function(couple) {

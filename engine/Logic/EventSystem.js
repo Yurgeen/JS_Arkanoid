@@ -34,13 +34,12 @@ EventSystem = {
     },
 
     registerModule: function(name, instance) {
-        var me = EventSystem;
-        if (!Utils.isDefined(me.EventMap[name])) {
-            me.EventMap[name] = {
+        if (!Utils.isDefined(this.EventMap[name])) {
+            this.EventMap[name] = {
                 context: instance,
                 subscriptions: (instance.subscribe && instance.subscribe()) || {}
             };
-            instance.fireEvent = me.fireEvent;
+            instance.fireEvent = this.fireEvent;
         } else {
             console.error("Module " + name + ", already registed");
         }

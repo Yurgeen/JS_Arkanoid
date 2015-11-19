@@ -1,3 +1,5 @@
+Modules = {};
+
 Modules.Loader = {
 
     CORE_LOADS : {
@@ -10,23 +12,20 @@ Modules.Loader = {
 
     },
 
-    init : function(onLoadCallback) {
-        var me = Modules.Loader;
+    init : function(onLoadCallback, showPercent) {
 
-        me.onLoadCallback = onLoadCallback;
-        Modules.ResourceManager.init(function() {
-            me.checkCoreLoaded("ResourceManager");
-        });
-        Animation.SceneManager.init(function() {
-            me.checkCoreLoaded("AnimationManager");
-        });
-        UserInputManager.init(function() {
-            me.checkCoreLoaded("UserInputManager");
-        });
+        this.showProgress = showPercent;
+        this.toLoadCont_ = Object.keys(this.CORE_LOADS).length + Object.keys(this.MODULES).length;
+        this.loadedCount_ = 0;
+
+        this.onLoadCallback = onLoadCallback;
+        Modules.ResourceManager.init (this.checkCoreLoaded.bind (this, "ResourceManager"));
+        Animation.SceneManager.init (this.checkCoreLoaded.bind (this, "AnimationManager"));
+        UserInputManager.init (this.checkCoreLoaded.bind (this, "UserInputManager"));
     },
 
     registerModule : function(moduleConfig) {
-        var list = Modules.Loader.MODULES,
+        var list = this.MODULES,
             moduleName = moduleConfig.MODULE_NAME;
 
         if (!Utils.isDefined(moduleName)) {
@@ -42,27 +41,31 @@ Modules.Loader = {
     },
 
     checkCoreLoaded : function (name) {
-        Modules.Loader.CORE_LOADS[name] = true;
-        for (var key in Modules.Loader.CORE_LOADS){
-            if (!Modules.Loader.CORE_LOADS[key]){
+        this.CORE_LOADS[name] = true;
+        this.loadedCount_++;
+        this.showProgress(this.loadedCount_/this.toLoadCont_);
+
+        for (var key in this.CORE_LOADS){
+            if (!this.CORE_LOADS[key]){
                 return;
             }
         }
-        Modules.Loader.loadModules();
+        this.loadModules();
     },
 
     loadModules : function () {
-        var me = Modules.Loader;
-        for (var key in me.MODULES) {
-            Modules[key] = new me.MODULES[key];
+        for (var key in this.MODULES) {
+            Modules[key] = new this.MODULES[key];
             EventSystem.registerModule(key, Modules[key]);
             Modules[key].start();
+            this.loadedCount_++;
+            this.showProgress(this.loadedCount_/this.toLoadCont_);
         }
-        me.checkModulesLoaded();
+        this.checkModulesLoaded();
     },
 
     checkModulesLoaded : function () {
         console.log("All modules are loaded.");
-        Modules.Loader.onLoadCallback();
+        this.onLoadCallback();
     }
 };

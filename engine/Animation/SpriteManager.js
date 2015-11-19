@@ -7,42 +7,38 @@ Animation.SpriteManager = {
     _localTime: 0,
 
     processFrame: function (dt) {
-        var me = Animation.SpriteManager;
-        me._localTime += dt;
-        me.processSprites();
+        this._localTime += dt;
+        this.processSprites();
     },
 
     processSprites: function() {
-        var me = Animation.SpriteManager,
-            newValue, dn;
-        for (var fps in me._fpsGroups) {
+        var newValue, dn;
+        for (var fps in this._fpsGroups) {
 
-            if (!me._fpsGroups.hasOwnProperty(fps)){
+            if (!this._fpsGroups.hasOwnProperty(fps)){
                 continue;
             }
 
-            newValue = Math.ceil((me._localTime * fps)/1000);
+            newValue = Math.ceil((this._localTime * fps)/1000);
 
-            if (me._fpsGroups[fps].abstractCounter.prevValue === -1){
-                me._fpsGroups[fps].abstractCounter.prevValue = newValue;
+            if (this._fpsGroups[fps].abstractCounter.prevValue === -1){
+                this._fpsGroups[fps].abstractCounter.prevValue = newValue;
             }
 
-            dn = newValue - me._fpsGroups[fps].abstractCounter.prevValue;
+            dn = newValue - this._fpsGroups[fps].abstractCounter.prevValue;
 
-            for (var c in me._fpsGroups[fps].clients) {
-                var client = me._fpsGroups[fps].clients[c];
+            for (var c in this._fpsGroups[fps].clients) {
+                var client = this._fpsGroups[fps].clients[c];
                 client.item.sprite = client.item.sprite + dn > client.size -1? 0 : client.item.sprite + dn;
             }
 
-            me._fpsGroups[fps].abstractCounter.prevValue = newValue;
+            this._fpsGroups[fps].abstractCounter.prevValue = newValue;
         }
     },
 
     registerItem: function (item, fps, loop) {
-        var me = Animation.SpriteManager;
-
-        if (!Utils.isDefined(me._fpsGroups[fps])) {
-            me._fpsGroups[fps] = {
+        if (!Utils.isDefined(this._fpsGroups[fps])) {
+            this._fpsGroups[fps] = {
                 abstractCounter: {
                     prevValue: -1
                 },
@@ -50,7 +46,7 @@ Animation.SpriteManager = {
             };
         }
 
-        me._fpsGroups[fps].clients[item.id] = {
+        this._fpsGroups[fps].clients[item.id] = {
             item: item,
             size: Modules.ResourceManager.graphics[item.image].spriteConfig.length - 1,
             loop: loop || true

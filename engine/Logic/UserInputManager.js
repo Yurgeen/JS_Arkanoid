@@ -1,12 +1,11 @@
 UserInputManager = {
 
     init: function(callback){
-        var me = UserInputManager,
-            scope = document.getElementById("scene");
-        scope.addEventListener("click", me.onMouseClick);
-        scope.addEventListener("mousemove", me.onMouseMove);
-        scope.addEventListener("contextmenu", me.onMouseRightClick);
-        me.fireEvent = EventSystem.fireEvent;
+        var scope = document.getElementById("scene");
+        scope.addEventListener("click", this.onMouseClick);
+        scope.addEventListener("mousemove", this.onMouseMove);
+        scope.addEventListener("contextmenu", this.onMouseRightClick);
+        this.fireEvent = EventSystem.fireEvent;
         callback();
     },
 
