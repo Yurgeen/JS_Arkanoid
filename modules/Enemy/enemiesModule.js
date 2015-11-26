@@ -13,7 +13,7 @@ Modules.Loader.registerModule({
         var me = this,
             item;
 
-        CollisionManager.couples.push( [Enemy.TYPE, Enemy.TYPE] );
+        CollisionManager.couples.push( ["enemy", "enemy"] );
 
         me.items = [];
     },
@@ -21,16 +21,9 @@ Modules.Loader.registerModule({
     onClicked: function(config) {
         var me = this,
             item;
-        item = new Enemy({
-            image : "bird",
-            x : config.pos.x,
-            y :  config.pos.y,
-            layer : 5,
-            width : 50,
-            height : 50,
-            sprite : 0,
-            fps : 30
-        });
+        if (config.button !== "right") return;
+
+        item = new Enemy(config.pos.x, config.pos.y);
 
         item.direction = {
             x: Math.random() > 0.5 ? 1 : -1,
@@ -41,7 +34,7 @@ Modules.Loader.registerModule({
 
         item.play();
         Animation.SpriteManager.registerItem(item, 30, true);
-        CollisionManager.registerItem(item, Enemy.TYPE);
+        CollisionManager.registerItem(item, "enemy");
         Animation.SceneManager.addItem(item);
     },
 

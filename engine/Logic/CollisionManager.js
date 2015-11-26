@@ -17,6 +17,10 @@ CollisionManager = {
         this.types[type].push(item);
     },
 
+    unregisterItem: function(type, item) {
+        delete this.types[type][this.types[type].indexOf(item)];
+    },
+
     processCollisions: function() {
         this.couples.forEach(this.checkCouple);
     },
@@ -29,8 +33,8 @@ CollisionManager = {
         cop1.forEach(function(item1) {
             cop2.forEach(function(item2){
                if (me.isCollided(item1, item2)) {
-                   item1.onCollided();
-                   item2.onCollided();
+                   item1.onCollided(couple[1]);
+                   item2.onCollided(couple[0]);
                }
             });
         });

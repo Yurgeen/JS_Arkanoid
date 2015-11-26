@@ -60,7 +60,7 @@ Modules.Loader = {
             Modules[key].start();
             this.loadedCount_++;
             this.showProgress(this.loadedCount_/this.toLoadCont_);
-        }
+    }
         this.checkModulesLoaded();
     },
 

@@ -1,6 +1,15 @@
-Enemy = function(config) {
+Enemy = function(x, y) {
     var me = this;
-    Animation.Item.call(me, config);
+    Animation.Item.call(me, {
+        image : "bird",
+        x : x,
+        y :  y,
+        layer : 5,
+        width : 50,
+        height : 50,
+        sprite : 0,
+        fps : 30
+    });
     me.direction = 0;
 };
 
@@ -23,11 +32,25 @@ Enemy.prototype = new Animation.Item({
         }
     },
 
-    onCollided: function () {
+    onCollided: function (sender) {
         var me = this;
-        me.direction = {
-            x: 0,
-            y: 0
+        if (sender === "enemy") {
+
+            me.direction = {
+                x: 0,
+                y: 0
+            }
         }
+        if (sender === "bullet") {
+            CollisionManager.unregisterItem("enemy", me);
+            me.stop();
+            me.explode();
+        }
+    },
+
+    explode: function() {
+        var me = this;
+        me.image = "bird";
+        me.sprite = 0;
     }
 });
