@@ -26,6 +26,7 @@ Modules.Loader.registerModule({
 
         CollisionManager.registerItem(newBullet, newBullet.TYPE);
         Animation.SceneManager.addItem(newBullet);
+        Animation.SpriteManager.registerItem(newBullet, 15, true);
         newBullet.play();
     }
 

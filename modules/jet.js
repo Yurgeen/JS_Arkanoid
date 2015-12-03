@@ -31,49 +31,62 @@ Modules.Loader.registerModule({
     constructor: function() {
         var me = this;
 
-        me.item = new Animation.Item({
+        me.item1 = new Animation.Item({
             image: "jet",
             x: 200,
             y: 200,
-            height: 70,
-            width: 80,
+            height: 48,
+            width: 48,
+            layer: 5
+        });
+        me.item2 = new Animation.Item({
+            image: "jet2",
+            x: 200,
+            y: 200,
+            height: 48,
+            width: 48,
             layer: 3
         });
-        me.item.animationFunction = function() {
+        me.item1.animationFunction = function() {
             for ( var key in me.INPUTS._pressed) {
                 switch (key) {
                     case "UP" :
-                        this.y -= 10;
+                        this.y -= 1;
                         break;
                     case "DOWN" :
-                        this.y += 10;
+                        this.y += 1;
                         break;
                     case "LEFT" :
-                        this.x -= 10;
+                        this.x -= 1;
                         break;
                     case "RIGHT" :
-                        this.x += 10;
+                        this.x += 1;
                         break;
                 }
             }
         };
-        Animation.SceneManager.addItem(me.item);
+        me.item2.animationFunction = me.item1.animationFunction;
+        Animation.SceneManager.addItem(me.item1);
+        Animation.SceneManager.addItem(me.item2);
     },
 
 
     start: function(){
         var me = this;
-        me.item.play();
+        me.item1.play();
+        me.item2.play();
     },
 
     onMouseMove: function(pos){
-        var me = this;
-        me.item.rotation = Math.atan2(pos.x -  me.item.x, me.item.y - pos.y);
+        var me = this,
+            alpha = Math.atan2(pos.x - me.item1.x - me.item1.center.x, me.item1.y - pos.y + me.item1.center.y);
+        me.item1.rotation = alpha;
+        me.item2.rotation = alpha;
     },
 
     onMouseClick: function(conf) {
         if (conf.button === "left") {
-            this.fireEvent("request:bullets.createBullet", this.item.x + this.item.center.x, this.item.y + this.item.center.y, this.item.rotation);
+            this.fireEvent("request:bullets.createBullet", this.item1.x + this.item1.center.x, this.item1.y + this.item1.center.y, this.item1.rotation);
         }
     },
 
