@@ -6,7 +6,7 @@
 Animation = {};
 
 Animation.SceneManager = {
-
+    debug : false,
     layers : [],
     items : {},
 
@@ -135,7 +135,12 @@ Animation.SceneManager = {
 
         //Canvas
         if (item.canvas) {
-            ctx.drawImage(item.canvas, item.x, item.y, item.width, item.height);
+            ctx.drawImage(item.canvas, item.x - item.center.x, item.y - item.center.y, item.width, item.height);
+        }
+
+        if (this.debug) {
+            ctx.strokeStyle = "red";
+            ctx.strokeRect(-item.center.x, -item.center.y, item.width, item.height);
         }
 
         ctx.restore();

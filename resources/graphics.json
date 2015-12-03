@@ -1,6 +1,9 @@
 {
   "jet" : {
-      "image" : "resources/images/jet.png"
+      "image" : "resources/images/rb_top.png"
+  },
+  "jet2" : {
+      "image" : "resources/images/rb_back.png"
   },
   "bird" : {
     "image" : "resources/images/enemy.png",
@@ -11,7 +14,12 @@
     }
   },
   "rocket" : {
-    "image" : "resources/images/bullet.png"
+    "image" : "resources/images/win_sprite.png",
+    "sprite" : {
+      "frameWidth" : 32,
+      "frameHeight" : 32,
+      "count" : 17
+    }
   },
   "explosion" : {
     "image" : "resources/images/boom.png",
