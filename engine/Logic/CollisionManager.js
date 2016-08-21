@@ -1,4 +1,5 @@
 CollisionManager = {
+
     /** Collection of all collidable items grouped by TYPE */
     types: {},
 
