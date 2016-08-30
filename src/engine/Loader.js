@@ -28,11 +28,11 @@ Modules.Loader = {
         var list = this.MODULES,
             moduleName = moduleConfig.MODULE_NAME;
 
-        if (!Utils.isDefined(moduleName)) {
+        if (!Sugar.isDefined(moduleName)) {
             console.error("Cannot load modules");
         }
 
-        if (!Utils.isDefined(list[moduleName])) {
+        if (!Sugar.isDefined(list[moduleName])) {
             list[moduleName] = moduleConfig.constructor || function() {};
             list[moduleName].prototype = moduleConfig;
         } else {

@@ -11,7 +11,7 @@ CollisionManager = {
      * @param type String
      */
     registerItem: function(item, type) {
-        if (!Utils.isDefined(this.types[type])) {
+        if (!Sugar.isDefined(this.types[type])) {
             this.types[type] = [];
         }
         this.types[type].push(item);

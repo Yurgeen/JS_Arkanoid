@@ -1,3 +1,5 @@
+Sugar.useGlobal("Animation");
+
 /** Animation item class
  *
  * @param config
@@ -17,7 +19,7 @@
  */
 
 Animation.Item = function (config) {
-    Utils.apply(this, this.ANIMATION_ITEM_DEFAULT_CONFIG);
+    Sugar.apply(this, this.ANIMATION_ITEM_DEFAULT_CONFIG);
 
     if (config.image) {
         this.image = config.image;
@@ -29,7 +31,7 @@ Animation.Item = function (config) {
     }
 
     if (config) {
-        Utils.apply(this, config);
+        Sugar.apply(this, config);
     }
 
     this.id = Animation.SceneManager.getNewItemID();

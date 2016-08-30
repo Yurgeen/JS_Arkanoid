@@ -34,7 +34,7 @@ EventSystem = {
     },
 
     registerModule: function(name, instance) {
-        if (!Utils.isDefined(this.EventMap[name])) {
+        if (!Sugar.isDefined(this.EventMap[name])) {
             this.EventMap[name] = {
                 context: instance,
                 subscriptions: (instance.subscribe && instance.subscribe()) || {}

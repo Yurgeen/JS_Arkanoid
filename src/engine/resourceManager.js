@@ -32,7 +32,7 @@ Modules.ResourceManager = {
                 config = JSON.parse(req.responseText);
 
                 me.loadedImgConfigsCnt++;
-                me.imagesToLoad += Utils.countProperties(config);
+                me.imagesToLoad += Sugar.countProperties(config);
 
                 for (var img in config) {
                     var image = new Image();
@@ -84,7 +84,7 @@ Modules.ResourceManager = {
 
     checkLoad : function() {
         var me = this;
-        if (me.GRAPHICS_CONFIG.length == me.loadedImgConfigsCnt && Utils.countProperties(me.graphics) == me.imagesToLoad){
+        if (me.GRAPHICS_CONFIG.length == me.loadedImgConfigsCnt && Sugar.countProperties(me.graphics) == me.imagesToLoad){
             console.log("All graphics is loaded.");
             me.callback();
         }

@@ -1,9 +1,10 @@
+Sugar.useGlobal("Animation");
+
 /** AnimationManager
  * @singleton
  *
- * */
-
-Animation = {};
+ * 
+ */
 
 Animation.SceneManager = {
     debug : false,
@@ -122,7 +123,7 @@ Animation.SceneManager = {
                 swidth = res.image.width,
                 sheight = res.image.height;
 
-            if (Utils.isDefined(res.spriteConfig) && Utils.isDefined(item.sprite)) {
+            if (Sugar.isDefined(res.spriteConfig) && Sugar.isDefined(item.sprite)) {
                 sx = res.spriteConfig[item.sprite].x;
                 sy = res.spriteConfig[item.sprite].y;
                 swidth = res.spriteConfig.width;

@@ -37,7 +37,7 @@ Animation.SpriteManager = {
     },
 
     registerItem: function (item, fps, loop) {
-        if (!Utils.isDefined(this._fpsGroups[fps])) {
+        if (!Sugar.isDefined(this._fpsGroups[fps])) {
             this._fpsGroups[fps] = {
                 abstractCounter: {
                     prevValue: -1

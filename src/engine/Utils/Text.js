@@ -1,4 +1,4 @@
-Utils.Text = {
+Text = {
 
     getTextImage: function (text, fontSize, fontFamily, offset, maxWidth, operations) {
         var fontConfig, canvas, ctx, x, y;
