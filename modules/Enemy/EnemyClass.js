@@ -1,12 +1,15 @@
 Enemy = function(x, y) {
     var me = this;
+    
+    var size = Math.ceil(50 + Math.random()*50);
+
     Animation.Item.call(me, {
         image : "bird",
         x : x,
         y :  y,
         layer : 5,
-        width : 50,
-        height : 50,
+        width : size,
+        height : size,
         sprite : 0,
         fps : 30
     });
@@ -17,8 +20,14 @@ Enemy.prototype = new Animation.Item({
 
     TYPE: "enemy",
 
+    isExploded: false,
+
     animationFunction: function() {
         var me = this;
+
+        if (me.isExploded) {
+            return;
+        }
 
         me.x += 10*me.direction.x;
         me.y += 10*me.direction.y;
@@ -50,7 +59,10 @@ Enemy.prototype = new Animation.Item({
 
     explode: function() {
         var me = this;
-        me.image = "bird";
+        me.image = "explosion";
         me.sprite = 0;
+        me.isExploded = true;
+        me.play();
+        me.loop = false;
     }
 });
